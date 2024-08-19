@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id = "root"></div>
+
+
+    <!-- 
+    조건부 렌더링
+    - 여러개의 엘리먼트 중, 특정 조건에 따라 하나의 엘리먼트만 렌더링 할 수 있다.
+    -->
+
+    <script type = "text/babel">
+        let root = ReactDOM.createRoot(document.getElementById('root'));
+
+        const answer = parseInt(prompt('리엑트가 재미있으신가요?\n1. 많이 재미있다. \n2. 조금 재미있다.'))
+
+        console.log(answer);
+        
+        /*
+        1. 렌더링 시 조건 비교 후 조건부 렌더링하기 (조건식이 심플할때는 괜찮음.)
+        -> 복잡한 경우에는 root 부분이 복잡해지기 때문에 권장되지 않음
+        */
+
+        // const positiveElement = <h1>앞으로 점점 더 재밌어질거에요^^</h1>
+        // const negativeElement = <h1>천천히 앞의 내용을 복습해보세요^^</h1>
+
+        // root.render(
+        //     (answer === 1)? positiveElement:negativeElement
+        // )
+
+        // 2. JSX 내에서 조건에 따라 엘리먼트 다르게 생성하기
+
+        // 2-1. if문으로 조건부 엘리먼트 생성하기
+        // let element;
+
+        // if(answer ===1) {
+        //     element = <h1>앞으로 점점 더 재밌어질거에요^^</h1>;
+        // } else {
+        //     element = <h1>천천히 앞의 내용을 복습해보세요^^</h1>;
+        // }
+
+        // root.render(element);
+
+        // 2-2. 삼항연산자로 조건부 엘리먼트 생성하기
+        // (const와 삼항연산자를 쓰는 구문을 안정성 때문에 더 많이 사용한다.)
+
+        // const element = (answer === 1)? (
+        //     <h1>앞으로 점점 더 재밌있어 질거에요^^</h1>
+        // ): (
+        //     <h1>천천히 앞의 내용을 복습해보세요^^</h1>
+        // );
+
+        // 2-3. $$ 연산자를 이용한 조건부 엘리먼트 생성하기 (조건에 맞을 때만 엘리먼트가 보이게 할때)
+
+        const element = answer === 1 && <h1>앞으로 점점 더 재밌있어 질거에요^^</h1>
+
+        root.render(element);
+    </script>
+
+    <!-- 
+        1. 리엑트는 변화가 필요한 부분만 바꿔준다(가상돔) -> 그래서 빠르고, 그래서 사용한다.
+
+        2. React로 화면을 그릴때 html이랑 비슷한 JSX라는 문법으로 element를 만들어서 그린다.
+
+        3. JSX 문법
+        3-1. 여러개의 엘리먼트를 묶을때 -> 플래그먼트 <></>
+        3-2. 속성은 카멜케이스로 작성한다. class는 className이라고 써야한다.
+        3-3. 인라인 속성은 객체로 넣어줘야한다. {{}}
+
+        4. 조건에 따라 엘리먼트를 생성할 때 -> 삼항연산자를 사용한다.
+    -->
+</body>
+</html>

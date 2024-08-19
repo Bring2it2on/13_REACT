@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id = "root"></div>
+
+
+    <script type = "text/babel">
+        
+        // 1. 반환값만 ReactElement에서 정의해서 반환하면 된다.
+        // 2. 앞 글자를 대문자로 정의해야 한다.
+        // state, 라이프사이클 api 사용이 불가능하다. -> hooks를 제공해 문제가 해결됨.
+
+    
+        function Title() {
+            return (
+                <h1>Function Component</h1>
+            )
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<Title/>);
+    </script>
+</body>
+</html>

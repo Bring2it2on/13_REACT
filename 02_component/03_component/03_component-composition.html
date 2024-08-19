@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id = "root"></div>
+    <div id = "root2"></div>
+
+
+    <script type = "text/babel">
+        /*
+            컴포넌트의 합성
+            컴포넌트는 자신의 출력에 따른 컴포넌트를 참조할 수 있다.
+            컴포넌트는 재사용 가능한 크기로 작게 유지해야하며, 순수 함수처럼 작성이 되어야한다.
+        */
+        // 순수함수 : 함수의 입력만이 함수의 결과에 영향을 주는 것
+
+        const user = {
+            name: '홍길동',
+            age: 20,
+            phone: '010-1234-5678',
+            email: 'hong123@gmail.com',
+        }
+
+        // let name = '홍길동';
+        // let age = 20;
+        // let phone = '010-1234-5678';
+        // let email = 'hong123@gmail.com';
+
+        // const user = {
+        //     name: name,
+        //     age: age,
+        //     phone: phone,
+        //     email: email,
+        // }
+
+        // 프로퍼티 단축 구문
+        // const user = {name, age, phone, email};
+
+        // 구조분해할당
+        const {name, phone} = user;
+        
+
+        function NameCard() {
+            return <h1>{name}</h1>
+        }
+
+        function AgeCard() {
+            return <h2 style={{color: 'orangered'}}>{user.age}</h2>
+        }
+
+        function PhoneCard() {
+            return <h3 style={{color : 'red'}}>{phone}</h3>
+        }
+
+        // EmailCard 컴포넌트 user.email style -> 바탕색을 yellow, h3
+        function EmailCard() {
+            return <h3 style={{backgroundColor: 'yellow'}}>{user.email}</h3>
+        }
+
+        function UserInfo() {
+            return (
+                <div style={{width: 300, border: '1px solid black', padding: '10px'}}>
+                    <NameCard/>
+                    <AgeCard/>
+                    <PhoneCard/>
+                    <EmailCard/>
+                </div>
+            )
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<UserInfo/>);
+        ReactDOM.createRoot(document.getElementById('root2')).render(<UserInfo/>);
+    </script>
+</body>
+</html>
