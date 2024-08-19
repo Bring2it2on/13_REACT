@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/@babel/standalone/babel.min.js"
+    ></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const user = {
+        name: "Gildong",
+        firstName: "Gildong",
+        phone: "010-1234-5678",
+      };
+
+      // 최상위 엘리먼트가 두개 이상이면 에러가 발생하기 때문에
+      // <div> 태그로 감싸서 하나의 돔트리를 생성하게 해야한다.
+      // const element = (
+      //     <div>
+      //         <h1>Hello, {user.name}</h1>
+      //         <h2>phone, {user.phone}</h2>
+      //     </div>
+      // );
+
+      // div 태그 : 실제 돔의 구성요소를 차지한다. -> 리소스를 낭비한다.
+      // <React.Fragment>로 감싸서 형식상의 돔 트리 상위 엘리먼트를 만들어준다.
+
+      //   const element = (
+      //     <React.Fragment>
+      //       <h1>Hello, {user.name}</h1>
+      //       <h3>phone, {user.phone}</h3>
+      //     </React.Fragment>
+      //   );
+
+      // 구조분해할당하면 React. 을 생략가능.
+      const { Fragment } = React;
+
+    //   const element = (
+    //     <Fragment>
+    //       <h1>Hello, {user.name}</h1>
+    //       <h3>phone, {user.phone}</h3>
+    //     </Fragment>
+    /
+
+      const { Fragment } = React;
+
+      const element = (
+        <Fragment>
+          <h1>Hello, {user.name}</h1>
+          <h3>phone, {user.phone}</h3>
+        </Fragment>
+      );
+      ReactDOM.createRoot(document.getElementById("root")).render(element);
+    </script>
+  </body>
+</html>

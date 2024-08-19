@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id = "root"></div>
+
+
+    <script type = "text/babel">
+
+        // h1 {
+        //     background-color: red;
+        //     color: blue;
+        // }
+        
+
+        /*
+            케밥 표기법으로 사용을 하던 것을, 카멜케이스로 작성해야한다.
+            속성 값은 문자열 혹은 숫자 형태로 작성해야 한다. (객체 X)
+        */
+        const style = {
+            backgroundColor: 'black',
+            color: 'white',
+            cursor: 'pointer',
+            textAlign: 'center',
+            padding: 20, // 단위를 생략했을 경우에는 숫자만 사용가능
+        }
+
+        const element = (
+            <>
+                <h1 style={style}>Hello World!</h1>
+                <h1 style={{backgroundColor : 'black', color:'white'}}>Hello World!</h1>
+            </>
+        )
+
+        ReactDOM.createRoot(document.getElementById('root')).render(element);
+    </script>
+</body>
+</html>

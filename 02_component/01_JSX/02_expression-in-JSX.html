@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id = "root"></div>
+
+
+    <script type = "text/babel">
+        
+        const user = {
+            firstName: "Gildong",
+            lastName: "Hong",
+        }
+        
+        // h1 태그의 element를 만들어주는 JSX문법
+        // 중괄호를 이용해 javascript 표현식(문법)을 사용
+        const element = <h1>Hello, {formatName(user)}</h1>
+
+        // 풀네임으로 return 해주는 함수
+        function formatName(user) {
+
+            return `${user.lastName} ${user.firstName}`
+        }
+        
+        ReactDOM.createRoot(document.getElementById('root')).render(element);
+    </script>
+</body>
+</html>
