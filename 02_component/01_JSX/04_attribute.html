@@ -42,7 +42,7 @@
         // }
 
         // 2. 문자열로 속성값 정의하는 방법
-        const element = <h1 id='title' className='highlight' onClick='test'>Hello World</h1>
+        const element = <h1 id='title' className='highlight' onClick={test} style={{cursor:'pointer'}}>Hello World</h1>
 
         function test() {
             console.log('클릭했네');

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<body>
+    <div id = "root"></div>
+
+    <!-- 이벤트 핸들러로 등록할 메소드를 화살표 함수로 하면 자동 바인딩 처리를 해준다. -->
+    <script type = "text/babel">
+        class EventComponent extends React.Component {
+
+            state = {
+                message: ''
+            }
+
+            onChangeHandler = (e) => {
+                this.setState({
+                    message: e.target.value
+                });
+            }
+
+            onClickHandler = (e) => {
+                alert(this.state.message);
+
+                this.setState({
+                    message:''
+                });
+            }
+
+            render() {
+                return(
+                    <>
+                        <h1>이벤트 핸들링</h1>
+                        <input
+                            type='text'
+                            name='message'
+                            placeholder='텍스트를 입력해주세요'
+                            onChange={this.onChangeHandler}
+                            value={this.state.message}
+                        />
+                    {/* 버튼으로 인풋태그에 들어간 값을 초기화 시켜보기*/}
+                        <button onClick={this.onClickHandler}>확인</button>
+                    </>
+                )
+            }
+        }
+        ReactDOM.createRoot(document.getElementById('root')).render(<EventComponent/>);
+    </script>
+</body>
+</html>

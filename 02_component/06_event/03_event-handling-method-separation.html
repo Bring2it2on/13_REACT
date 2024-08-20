@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<body>
+    <div id = "root"></div>
+
+
+    <script type = "text/babel">
+        class EventComponent extends React.Component {
+
+            state = {
+                message: ''
+            }
+
+            constructor(props) {
+                super(props);
+
+                /*
+                클래스의 임의 메서드가 특정 HTML 요소의 이벤트 핸들러가 되는 순간
+                메소드와 this의 관계가 끊어진다.
+                이때문에 임의 메소드가 이벤트로 등록되어도 this가 컴포넌트를 가리키기 위해서는
+                constructor에 컴포넌트 자신과 메소드를 바인딩하는 작업이 필요하다.
+                바인딩하지 않으면 this는 undefined가 된다. -> 불편함 -> 그래서 챔터 4번으로....!!
+                */
+                this.onChangeHandler = this.onChangeHandler.bind(this);
+                this.onClickHandler = this.onClickHandler.bind(this);
+            }
+            onChangeHandler(e) {
+                this.setState({
+                    message: e.target.value
+                });
+            }
+
+            onClickHandler(e) {
+                alert(this.state.message);
+
+                this.setState({
+                    message:''
+                });
+            }
+
+            render() {
+                return(
+                    <>
+                        <h1>이벤트 핸들링</h1>
+                        <input
+                            type='text'
+                            name='message'
+                            placeholder='텍스트를 입력해주세요'
+                            onChange={this.onChangeHandler}
+                            value={this.state.message}
+                        />
+                    {/* 버튼으로 인풋태그에 들어간 값을 초기화 시켜보기*/}
+                        <button onClick={this.onClickHandler}>확인</button>
+                    </>
+                )
+            }
+        }
+        ReactDOM.createRoot(document.getElementById('root')).render(<EventComponent/>);
+    </script>
+</body>
+</html>
