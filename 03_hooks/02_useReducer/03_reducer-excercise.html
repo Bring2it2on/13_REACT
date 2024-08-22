@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/@babel/standalone/babel.min.js"
+    ></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useReducer } = React;
+
+      const initialState = {
+        names: [
+          { id: 1, name: "홍길동" },
+          { id: 2, name: "유관순" },
+          { id: 3, name: "이순신" },
+        ],
+        inputText: "",
+        nextId: 4,
+      };
+
+      function reducer(state, action) {
+        switch (action.type) {
+          case "ADD_NAME":
+            return {
+              ...state,
+              names: state.names.concat({
+                id: state.nextId,
+                name: state.inputText,
+              }),
+              nextId: state.nextId + 1,
+              inputText: "",
+            };
+          case "REMOVE_NAME":
+            return {
+              ...state,
+              names: state.names.filter((name) => name.id !== action.id),
+            };
+          case "CHANGE_INPUT":
+            return {
+              ...state,
+              inputText: action.text,
+            };
+          default:
+            return state;
+        }
+      }
+
+      function App() {
+        const [state, dispatch] = useReducer(reducer, initialState);
+
+        const onChangeHandler = (e) => {
+          dispatch({ type: "CHANGE_INPUT", text: e.target.value });
+        };
+
+        const onClickHandler = () => {
+          dispatch({ type: "ADD_NAME" });
+        };
+
+        const onRemove = (id) => {
+          dispatch({ type: "REMOVE_NAME", id });
+        };
+
+        const nameList = state.names.map((name) => (
+          <li key={name.id} onDoubleClick={() => onRemove(name.id)}>
+            {name.name}
+          </li>
+        ));
+
+        return (
+          <>
+            <ul>
+              <input value={state.inputText} onChange={onChangeHandler} />
+              <button onClick={onClickHandler}>추가</button>
+              {nameList}
+            </ul>
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
