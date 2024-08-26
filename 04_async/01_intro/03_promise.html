@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            promise는 콜백지옥과 같은 코드가 형성되지 않게(비동기 통신간에 순서를 정하기 쉽게) 하는
+            방안으로 ES6에서 도입되었다.
+        */
+        
+        function increase(number) {
+                
+            const promise = new Promise((resolve, reject) => {
+                setTimeout(
+                    () => {
+                        const result = number + 10;
+
+                        if(result > 50) {
+                            const e = new Error('NumberTooBig');
+
+                            return reject(e);
+                        }
+
+                        resolve(result);
+                    },
+                    1000
+                );
+            });
+
+            return promise;
+        }
+
+        /*
+            increase 함수 호출 후에는 promise가 반환된다.
+            이 promise는 resolve함수에 던져진 인수를 기억한다.
+            이 promise를 통해 then 함수를 호출하고 
+            던져지는 콜백함수의 인수로 기억했던 resolve 함수의 인수를 넣어준다.
+        */
+        console.log(increase(0));
+        
+        increase(0)
+            .then(number => {           // promise 내부의 resolve가 호출되고 결과가 담기고 난 뒤 then이 실행됨.
+                console.log(number);
+                
+                return increase(number); // increase(10)
+            })
+            .then(number => {
+                console.log(number); 
+                
+                return increase(number); // increase(20)
+            })
+            .then(number => {
+                console.log(number);
+                
+                return increase(number); // increase(30)
+            })
+            .then(number => {
+                console.log(number);
+                
+                return increase(number);// increase(40)
+            })
+            .then(number => {
+                console.log(number);
+                
+                return increase(number);// increase(50)
+            })
+            .then(number => {
+                console.log(number);
+                console.log('end');
+            })
+            .catch(e => { // reject에서 전달한 에러 객체를 콜백함수의 인수로 넣어준다.
+                console.log(e, '가 발생했네~!');
+            })
+            .finally(() => {
+                console.log('finally 실행...');
+                
+            })
+    </script>
+</body>
+</html>

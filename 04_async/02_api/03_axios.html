@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+<body>
+    <div id = "root"></div>
+
+
+    <script type = "text/babel">
+        /*
+            axios는 데이터 변환처리(json()) 등을 하지 않아도 되므로 편하게 사용 가능하다.
+            (이미 파싱된 데이터가 data라는 조회 결과 response 객체의 프로퍼티로 들어있다.)
+            자세한 사용방법은 'https://github.com/axios/axios#example'사이트를 참고
+        */
+        function callAPI() {
+            axios.get('https://jsonplaceholder.typicode.com/users')
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err));
+        }
+
+        function App() {
+
+            const onClickHandler = () => {
+                callAPI();
+            }
+
+            return <button onClick={onClickHandler}>API 요청</button>
+        }
+        
+        ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+    </script>
+</body>
+</html>
