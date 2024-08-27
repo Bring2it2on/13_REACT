@@ -1,0 +1,16 @@
+#NavBar {
+    display: flex;
+    margin-top: 100px;
+    width: 150px;
+    height: 200px;
+    background-color: beige;
+    border: 3px solid skyblue;
+    border-radius: 20px;
+
+}
+
+#NavBar ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
