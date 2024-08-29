@@ -10,9 +10,9 @@ function Navbar() {
     return (
         <div id='NavBar'>
             <ul>
-                <li><NavLink to="/" style={({isActive}) => isActive? activeStyle : undefined}>메인페이지</NavLink></li>
-                <li><NavLink to="/mypage" style={({isActive}) => isActive? activeStyle : undefined}>마이페이지</NavLink></li>
-                <li><NavLink to="/login" style={({isActive}) => isActive? activeStyle : undefined}>로그인</NavLink></li>
+                <li><NavLink to="/" style={({isActive}) => isActive? activeStyle : undefined}>Home</NavLink></li>
+                <li><NavLink to="/about" style={({isActive}) => isActive? activeStyle : undefined}>소개</NavLink></li>
+                <li><NavLink to="/menu" style={({isActive}) => isActive? activeStyle : undefined}>메뉴목록</NavLink></li>
             </ul>
         </div>
     )

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/redux@4.2.0/dist/redux.js"></script>
+    <script src="https://unpkg.com/react-redux@8.0.4/dist/react-redux.js"></script>
+<body>
+    <div id = "root"></div>
+
+
+    <script type = "text/babel">
+        
+        // 덕스패턴: 리덕스 한 모듈에 필요한 기능들을 전부 널어놓는 것
+        // => 초기값, 액션, 리듀서를 관련있는 state 별로 modules 폴더에 만들어서 관리
+    
+        const {Provider, useSelector, useDispatch} = ReactRedux;
+        const {createStore} = Redux;
+
+        const {useEffect} = React;
+
+        /* 초기값 */
+        const initialState = 0;
+
+        /* 액션 */
+
+        // 액션타입을 상수로 정의한다.
+        // 액션에 접두사가 붙는 이유는 다른 모듈과 액션 값이 겹치지 않게 하기 위함.
+        const INCREMENT = 'count/INCREMENT';
+        const DECREMENT = 'count/DECREMENT';
+
+        // return이 없는 축약형
+        const increase = () => (
+            {
+                type: INCREMENT,
+                payload: {
+                    incrementValue: 1
+                }
+            }
+        )
+
+        const decrease = () => (
+            {
+                type: DECREMENT,
+                payload: {
+                    decrementValue: 1
+                }
+            }
+        )
+        
+        /* 리듀서 */
+        function reducer(state = initialState, action) {
+            const {type, payload} = action;
+
+            switch (type) {
+                case INCREMENT:
+                    return state + payload.incrementValue;
+                case DECREMENT:
+                    return state - payload.decrementValue;
+                default:
+                    return state
+            }
+        }
+
+        /* ------------------------------------------------------ */
+
+        /* 컴포넌트 */
+        function App() {
+
+            const count = useSelector(state => state);
+            const dispatch = useDispatch();
+
+            let intervalId;
+            let timeoutId;
+
+            const increaseCount = () => {
+                dispatch(increase());
+            };
+
+            const startIncreasing = () => {
+                increaseCount(); // 처음 한 번 실행
+                intervalId = setInterval(increaseCount, 100); // 100ms마다 증가
+            };
+
+            const stopIncreasing = () => {
+                clearInterval(intervalId); // 증가 멈춤
+                clearTimeout(timeoutId); // 타이머 정리
+            };
+
+            const handleMouseDown = () => {
+                timeoutId = setTimeout(startIncreasing, 2000);
+                increaseCount(); // 처음 한 번 실행
+            };
+
+            const decreaseCount = () => {
+                dispatch(decrease());
+            };
+
+            useEffect(() => {
+                // 컴포넌트가 언마운트될 때 정리
+                return () => {
+                    stopIncreasing();
+                };
+            }, []);
+
+            return(
+                <>
+                    <h1>Count: {count}</h1>
+                    <button
+                        onMouseDown={handleMouseDown} 
+                        onMouseUp={stopIncreasing} 
+                        onMouseLeave={stopIncreasing}
+                    >증가</button>
+                    <button onClick={decreaseCount}>감소</button>
+                </>
+            )
+        }
+
+        /* ------------------------------------------------------ */
+        
+        /* 스토어 */
+        const store = createStore(
+            reducer
+        );
+
+        ReactDOM.createRoot(document.getElementById('root')).render(
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        );
+    </script>
+</body>
+</html>
